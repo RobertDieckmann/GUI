@@ -22,7 +22,7 @@ function varargout = GUI_DBTA_2(varargin)
 
 % Edit the above text to modify the response to help GUI_DBTA_2
 
-% Last Modified by GUIDE v2.5 07-Feb-2017 12:16:19
+% Last Modified by GUIDE v2.5 07-Feb-2017 12:50:08
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -136,6 +136,15 @@ else
     handles = guidata(hObject);
     guidata(hObject, handles)
 end
+time = A(2:end,3);
+time_string=datestr(time,'HH:MM:SS'); % Zeitvektor ist immer der gleiche 
+set(handles.slider_startzeit,'Min',time(1))
+set(handles.slider_startzeit,'Max',time(end))
+set(handles.slider_startzeit,'Value',time(1))
+set(handles.edit_start_zeit,'String',time_string(1,:))
+set(handles.slider_endzeit,'Min',time(1))
+set(handles.slider_endzeit,'Max',time(end))
+set(handles.slider_endzeit,'Value',time(1))
 % ... und aktualisiert
 guidata(hObject, handles)
 
@@ -888,7 +897,8 @@ switch handles.listenzuordnung                   % Case-Unterscheidung je nachde
 
         end
         % Die Legende wird mit den Werten vom String gefüllt.
-        legend(inhalt)       
+        legend(inhalt)     
+
         
     case 5
            % Der Inhalt der Listbox wird gelesen...
@@ -944,6 +954,9 @@ switch handles.listenzuordnung                   % Case-Unterscheidung je nachde
         
         
 end
+set(handles.edit_start_zeit,'String',time_string(1,:)); 
+set(handles.edit_end_zeit,'String',time_string(end,:)); 
+guidata(hObject, handles)
 hold off
 
 guidata(hObject, handles)                           % Übernahme der Änderungen
@@ -992,3 +1005,100 @@ function pushbutton_temp_plot_loeschen_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 cla(handles.axes1)
+
+
+
+function edit_start_zeit_Callback(hObject, eventdata, handles)
+% hObject    handle to edit_start_zeit (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of edit_start_zeit as text
+%        str2double(get(hObject,'String')) returns contents of edit_start_zeit as a double
+inhalt = str2double(get(hObject,'String'));
+guidata(hObject, handles)
+
+% --- Executes during object creation, after setting all properties.
+function edit_start_zeit_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to edit_start_zeit (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function edit_end_zeit_Callback(hObject, eventdata, handles)
+% hObject    handle to edit_end_zeit (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of edit_end_zeit as text
+%        str2double(get(hObject,'String')) returns contents of edit_end_zeit as a double
+inhalt = str2double(get(hObject,'String'));
+guidata(hObject, handles)
+
+% --- Executes during object creation, after setting all properties.
+function edit_end_zeit_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to edit_end_zeit (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+% --- Executes on slider movement.
+function slider_startzeit_Callback(hObject, eventdata, handles)
+% hObject    handle to slider_startzeit (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'Value') returns position of slider
+%        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
+wert = get(hObject,'Value');
+disp(get(hObject,'Min'))
+disp(wert)
+guidata(hObject, handles)
+
+
+
+% --- Executes during object creation, after setting all properties.
+function slider_startzeit_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to slider_startzeit (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: slider controls usually have a light gray background.
+if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor',[.9 .9 .9]);
+end
+
+
+% --- Executes on slider movement.
+function slider_endzeit_Callback(hObject, eventdata, handles)
+% hObject    handle to slider_endzeit (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'Value') returns position of slider
+%        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
+
+
+% --- Executes during object creation, after setting all properties.
+function slider_endzeit_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to slider_endzeit (see GCBO)q
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: slider controls usually have a light gray background.
+if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor',[.9 .9 .9]);
+end
